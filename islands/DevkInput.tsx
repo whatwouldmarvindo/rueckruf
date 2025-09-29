@@ -12,7 +12,7 @@ type DevkInputProps = {
   required?: boolean;
 };
 
-export function DevkInput<T>({
+export function DevkInput({
   label,
   name,
   value,
