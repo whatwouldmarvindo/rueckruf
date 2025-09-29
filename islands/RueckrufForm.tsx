@@ -3,6 +3,8 @@ import { useState } from "preact/hooks";
 import { DevkRadio } from "./DevkRadio.tsx";
 import { DevkInput } from "./DevkInput.tsx";
 import { DevkTextArea } from "./DevkTextArea.tsx";
+import { DevkInsureProductSelect } from "./DevkInsuranceProductSelect.tsx";
+import { preview } from "vite";
 
 interface RueckrufFormData {
   customerNumber?: number;
@@ -18,28 +20,12 @@ interface RueckrufFormData {
   comment?: string;
 }
 
-const insuranceProducts = ["Haftpflicht", "Hausrat", "KFZ", "Unfall", "Leben"];
-
-export default function DevkForm() {
+export default function RueckrufForm() {
   const [isCustomer, setIsCustomer] = useState(false);
   const [formData, setFormData] = useState<RueckrufFormData>({
     interests: [] as string[],
   });
   const [acceptDatenschutz, setAcceptDatenschutz] = useState(false);
-
-  const handleInterestChange = (
-    e: h.JSX.TargetedEvent<HTMLInputElement, Event>,
-  ) => {
-    const { value, checked } = e.currentTarget;
-    if (checked) {
-      setFormData({ ...formData, interests: [...formData.interests, value] });
-    } else {
-      setFormData({
-        ...formData,
-        interests: formData.interests.filter((interest) => interest !== value),
-      });
-    }
-  };
 
   const handleSubmit = (e: h.JSX.TargetedEvent<HTMLElement, Event>) => {
     e.preventDefault();
@@ -152,30 +138,10 @@ export default function DevkForm() {
             label="Wann sollen wir Sie kontaktieren?"
             name="contactTime"
             type="text"
+            placeholder="z.B. Mittwoch Vormittags"
             onChange={(newValue: string) =>
               setFormData({ ...formData, contactTime: newValue })}
           />
-
-          <div class="mb-6">
-            <label class="block text-gray-700 text-sm font-bold mb-2">
-              An welchen Versicherungssparten sind Sie interessiert?
-            </label>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
-              {insuranceProducts.map((insuranceProduct) => (
-                <div key={insuranceProduct}>
-                  <label class="cursor-pointer inline-flex items-center">
-                    <input
-                      type="checkbox"
-                      value={insuranceProduct}
-                      onChange={handleInterestChange}
-                      class="form-checkbox"
-                    />
-                    <span class="ml-2">{insuranceProduct}</span>
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
 
           <DevkTextArea
             label="Optionales Kommentarfeld"
@@ -184,7 +150,16 @@ export default function DevkForm() {
             formFieldName="comment"
           />
 
-          <div class="mb-6">
+          <DevkInsureProductSelect
+            value={formData.interests}
+            label="An welchen Versicherungssparten sind Sie interessiert?"
+            onChange={(products: string[]) =>
+              setFormData({ ...formData, interests: products })}
+          />
+
+          <hr />
+
+          <div class="mb-6 pt-2">
             <label htmlFor="Datenschutzhinweisen" class="cursor-pointer">
               <input
                 id="Datenschutzhinweisen"
