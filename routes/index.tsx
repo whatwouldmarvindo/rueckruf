@@ -1,4 +1,4 @@
-import DevkForm from "../islands/Rueckruf-form.tsx";
+import DevkForm from "../islands/RueckrufForm.tsx";
 
 export default function Index() {
   return (
