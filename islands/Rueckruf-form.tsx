@@ -1,5 +1,6 @@
 import { h } from "preact";
 import { useState } from "preact/hooks";
+import { DevkRadio } from "./DevkRadio.tsx";
 
 interface RueckrufFormData {
   customerNumber?: number;
@@ -21,17 +22,7 @@ const weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
 export default function DevkForm() {
   const [isCustomer, setIsCustomer] = useState(false);
   const [formData, setFormData] = useState<RueckrufFormData>({
-    customerNumber: undefined,
-    firstName: undefined,
-    lastName: undefined,
-    zipCode: undefined,
-    city: undefined,
-    profession: undefined,
-    employer: undefined,
-    email: undefined,
-    contactTime: undefined,
     interests: [] as string[],
-    comment: undefined,
   });
   const [acceptDatenschutz, setAcceptDatenschutz] = useState(false);
 
@@ -52,16 +43,13 @@ export default function DevkForm() {
   const handleInputChange = (
     e: h.JSX.TargetedEvent<HTMLInputElement | HTMLTextAreaElement, Event>,
   ) => {
-    // Wir stellen sicher, dass e.currentTarget.name ein Schlüssel von FormData ist.
-    const name = e.currentTarget.name as keyof FormData;
+    const name = e.currentTarget.name as keyof RueckrufFormData;
     const value = e.currentTarget.value;
-
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = (e: h.JSX.TargetedEvent<HTMLElement, Event>) => {
     e.preventDefault();
-    // Hier können Sie die Logik zum Senden der Formulardaten implementieren
     console.log(formData);
     alert("Formulardaten wurden in der Konsole protokolliert.");
   };
@@ -72,33 +60,12 @@ export default function DevkForm() {
         <p>{JSON.stringify(formData)}</p>
         <h2 class="text-2xl font-bold mb-6 text-gray-800">Kontaktanfrage</h2>
         <form onSubmit={handleSubmit}>
-          <div class="mb-6">
-            <label class="block text-gray-700 text-sm font-bold mb-2">
-              Sind Sie bereits Kunde der DEVK?
-            </label>
-            <div>
-              <label class="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="isCustomer"
-                  checked={isCustomer === true}
-                  onChange={() => setIsCustomer(true)}
-                  class="form-radio"
-                />
-                <span class="ml-2">Ja</span>
-              </label>
-              <label class="inline-flex items-center ml-6">
-                <input
-                  type="radio"
-                  name="isCustomer"
-                  checked={isCustomer === false}
-                  onChange={() => setIsCustomer(false)}
-                  class="form-radio"
-                />
-                <span class="ml-2">Nein</span>
-              </label>
-            </div>
-          </div>
+          <DevkRadio
+            label="Sind Sie bereits Kunde der DEVK?"
+            value={isCustomer}
+            onChange={setIsCustomer}
+            formFieldName="isCustomer"
+          />
 
           {isCustomer && (
             <div class="mb-4">
