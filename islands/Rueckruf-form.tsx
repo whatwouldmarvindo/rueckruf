@@ -1,9 +1,10 @@
 import { h } from "preact";
 import { useState } from "preact/hooks";
 import { DevkRadio } from "./DevkRadio.tsx";
+import { DevkInput } from "./DevkInput.tsx";
 
 interface RueckrufFormData {
-  customerNumber?: number;
+  customerNumber?: string;
   firstName?: string;
   lastName?: string;
   zipCode?: number;
@@ -68,64 +69,32 @@ export default function DevkForm() {
           />
 
           {isCustomer && (
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="customerNumber"
-              >
-                Wie ist Ihre Kundennummer?
-              </label>
-              <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="customerNumber"
-                type="text"
-                placeholder="Ihre Kundennummer"
-                name="customerNumber"
-                value={formData.customerNumber}
-                onChange={handleInputChange}
-              />
-            </div>
+            <DevkInput
+              label="Wie ist ihre Kundennummer"
+              name="customerNumber"
+              onChange={(newValue) =>
+                setFormData({ ...formData, customerNumber: newValue })}
+            />
           )}
 
           {!isCustomer && (
             <>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                    for="firstName"
-                  >
-                    Vorname
-                  </label>
-                  <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="firstName"
-                    type="text"
-                    placeholder="Max"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                    for="lastName"
-                  >
-                    Nachname
-                  </label>
-                  <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="lastName"
-                    type="text"
-                    placeholder="Mustermann"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
+                <DevkInput
+                  label="Vorname"
+                  name="firstName"
+                  onChange={(newValue) =>
+                    setFormData({ ...formData, firstName: newValue })}
+                  placeholder="Max"
+                />
+
+                <DevkInput
+                  label="Nachname"
+                  name="lastName"
+                  onChange={(newValue) =>
+                    setFormData({ ...formData, lastName: newValue })}
+                  placeholder="Mustermann"
+                />
               </div>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
