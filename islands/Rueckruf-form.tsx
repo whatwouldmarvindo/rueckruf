@@ -4,7 +4,7 @@ import { DevkRadio } from "./DevkRadio.tsx";
 import { DevkInput } from "./DevkInput.tsx";
 
 interface RueckrufFormData {
-  customerNumber?: string;
+  customerNumber?: number;
   firstName?: string;
   lastName?: string;
   zipCode?: number;
@@ -73,7 +73,10 @@ export default function DevkForm() {
               label="Wie ist ihre Kundennummer"
               name="customerNumber"
               onChange={(newValue) =>
-                setFormData({ ...formData, customerNumber: newValue })}
+                setFormData({
+                  ...formData,
+                  customerNumber: newValue as number,
+                })}
             />
           )}
 
@@ -84,113 +87,71 @@ export default function DevkForm() {
                   label="Vorname"
                   name="firstName"
                   onChange={(newValue) =>
-                    setFormData({ ...formData, firstName: newValue })}
+                    setFormData({ ...formData, firstName: newValue as string })}
                   placeholder="Max"
                 />
 
                 <DevkInput
                   label="Nachname"
                   name="lastName"
+                  type="text"
                   onChange={(newValue) =>
-                    setFormData({ ...formData, lastName: newValue })}
+                    setFormData({ ...formData, lastName: newValue as string })}
                   placeholder="Mustermann"
                 />
               </div>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                    for="zipCode"
-                  >
-                    PLZ
-                  </label>
-                  <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="zipCode"
-                    type="text"
-                    placeholder="50667"
-                    name="zipCode"
-                    value={formData.zipCode}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                    for="city"
-                  >
-                    Wohnort
-                  </label>
-                  <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="city"
-                    type="text"
-                    placeholder="Köln"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
+                <DevkInput
+                  label="PLZ"
+                  name="zipCode"
+                  type="number"
+                  onChange={(newValue) =>
+                    setFormData({ ...formData, zipCode: newValue as number })}
+                  placeholder="50667"
+                />
+
+                <DevkInput
+                  label="Wohnort"
+                  name="city"
+                  type="text"
+                  onChange={(newValue) =>
+                    setFormData({ ...formData, city: newValue as string })}
+                  placeholder="Köln"
+                />
               </div>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                    for="profession"
-                  >
-                    Beruf
-                  </label>
-                  <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="profession"
-                    type="text"
-                    placeholder="Ihr Beruf"
-                    name="profession"
-                    value={formData.profession}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                    for="employer"
-                  >
-                    Arbeitgeber
-                  </label>
-                  <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="employer"
-                    type="text"
-                    placeholder="Ihr Arbeitgeber"
-                    name="employer"
-                    value={formData.employer}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
+                <DevkInput
+                  label="Beruf"
+                  name="profession"
+                  type="text"
+                  onChange={(newValue) =>
+                    setFormData({
+                      ...formData,
+                      profession: newValue as string,
+                    })}
+                  placeholder="Ihr Beruf"
+                />
 
-              <div class="mb-4">
-                <label
-                  class="block text-gray-700 text-sm font-bold mb-2"
-                  for="email"
-                >
-                  E-Mail-Adresse
-                </label>
-                <input
-                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="email"
-                  type="email"
-                  placeholder="ihre.email@beispiel.de"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
+                <DevkInput
+                  label="Arbeitgeber"
+                  name="employer"
+                  type="text"
+                  onChange={(newValue) =>
+                    setFormData({ ...formData, employer: newValue as string })}
+                  placeholder="Ihr Arbeitgeber"
                 />
               </div>
+
+              <DevkInput
+                label="E-Mail-Adresse"
+                name="email"
+                type="email"
+                onChange={(newValue) =>
+                  setFormData({ ...formData, email: newValue as string })}
+                placeholder="ihre.email@beispiel.de"
+              />
             </>
           )}
 
