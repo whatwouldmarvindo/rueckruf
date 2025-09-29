@@ -2,6 +2,7 @@ import { h } from "preact";
 import { useState } from "preact/hooks";
 import { DevkRadio } from "./DevkRadio.tsx";
 import { DevkInput } from "./DevkInput.tsx";
+import { DevkTextArea } from "./DevkTextArea.tsx";
 
 interface RueckrufFormData {
   customerNumber?: number;
@@ -12,13 +13,12 @@ interface RueckrufFormData {
   profession?: string;
   employer?: string;
   email?: string;
-  contactTime?: Date;
+  contactTime?: string;
   interests: string[];
   comment?: string;
 }
 
 const insuranceProducts = ["Haftpflicht", "Hausrat", "KFZ", "Unfall", "Leben"];
-const weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
 
 export default function DevkForm() {
   const [isCustomer, setIsCustomer] = useState(false);
@@ -39,14 +39,6 @@ export default function DevkForm() {
         interests: formData.interests.filter((interest) => interest !== value),
       });
     }
-  };
-
-  const handleInputChange = (
-    e: h.JSX.TargetedEvent<HTMLInputElement | HTMLTextAreaElement, Event>,
-  ) => {
-    const name = e.currentTarget.name as keyof RueckrufFormData;
-    const value = e.currentTarget.value;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = (e: h.JSX.TargetedEvent<HTMLElement, Event>) => {
@@ -72,7 +64,8 @@ export default function DevkForm() {
             <DevkInput
               label="Wie ist ihre Kundennummer"
               name="customerNumber"
-              onChange={(newValue) =>
+              type="number"
+              onChange={(newValue: number | string) =>
                 setFormData({
                   ...formData,
                   customerNumber: newValue as number,
@@ -106,8 +99,8 @@ export default function DevkForm() {
                   label="PLZ"
                   name="zipCode"
                   type="number"
-                  onChange={(newValue) =>
-                    setFormData({ ...formData, zipCode: newValue as number })}
+                  onChange={(newValue: number) =>
+                    setFormData({ ...formData, zipCode: newValue })}
                   placeholder="50667"
                 />
 
@@ -115,8 +108,8 @@ export default function DevkForm() {
                   label="Wohnort"
                   name="city"
                   type="text"
-                  onChange={(newValue) =>
-                    setFormData({ ...formData, city: newValue as string })}
+                  onChange={(newValue: string) =>
+                    setFormData({ ...formData, city: newValue })}
                   placeholder="Köln"
                 />
               </div>
@@ -126,10 +119,10 @@ export default function DevkForm() {
                   label="Beruf"
                   name="profession"
                   type="text"
-                  onChange={(newValue) =>
+                  onChange={(newValue: string) =>
                     setFormData({
                       ...formData,
-                      profession: newValue as string,
+                      profession: newValue,
                     })}
                   placeholder="Ihr Beruf"
                 />
@@ -138,8 +131,8 @@ export default function DevkForm() {
                   label="Arbeitgeber"
                   name="employer"
                   type="text"
-                  onChange={(newValue) =>
-                    setFormData({ ...formData, employer: newValue as string })}
+                  onChange={(newValue: string) =>
+                    setFormData({ ...formData, employer: newValue })}
                   placeholder="Ihr Arbeitgeber"
                 />
               </div>
@@ -148,42 +141,20 @@ export default function DevkForm() {
                 label="E-Mail-Adresse"
                 name="email"
                 type="email"
-                onChange={(newValue) =>
-                  setFormData({ ...formData, email: newValue as string })}
+                onChange={(newValue: string) =>
+                  setFormData({ ...formData, email: newValue })}
                 placeholder="ihre.email@beispiel.de"
               />
             </>
           )}
 
-          <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="contactTime"
-            >
-              Wann sollen wir Sie kontaktieren?
-            </label>
-
-            <div className="flex flex-row align-middle justify-around">
-              {weekDays.map((day) => (
-                <div>
-                  <p>{day}</p>
-                  {["Vormittags", "Nachmittags"].map((time) => (
-                    <div>
-                      <label class="cursor-pointer inline-flex items-center">
-                        <input
-                          type="checkbox"
-                          value={day + time}
-                          onChange={handleInterestChange}
-                          class="form-checkbox"
-                        />
-                        <span class="ml-2">{time}</span>
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
+          <DevkInput
+            label="Wann sollen wir Sie kontaktieren?"
+            name="contactTime"
+            type="text"
+            onChange={(newValue: string) =>
+              setFormData({ ...formData, contactTime: newValue })}
+          />
 
           <div class="mb-6">
             <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -206,24 +177,12 @@ export default function DevkForm() {
             </div>
           </div>
 
-          <div class="mb-6">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="comment"
-            >
-              Optionales Kommentarfeld
-            </label>
-            <textarea
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="comment"
-              placeholder="Ihre Nachricht an uns"
-              name="comment"
-              rows={4}
-              value={formData.comment}
-              onChange={handleInputChange}
-            >
-            </textarea>
-          </div>
+          <DevkTextArea
+            label="Optionales Kommentarfeld"
+            onChange={(newValue) =>
+              setFormData({ ...formData, comment: newValue })}
+            formFieldName="comment"
+          />
 
           <div class="mb-6">
             <label htmlFor="Datenschutzhinweisen" class="cursor-pointer">
