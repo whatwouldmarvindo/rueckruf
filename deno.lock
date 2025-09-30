@@ -25,6 +25,7 @@
     "jsr:@std/path@^1.1.1": "1.1.2",
     "jsr:@std/semver@1": "1.0.5",
     "jsr:@std/uuid@^1.0.7": "1.0.9",
+    "jsr:@zod/zod@^4.1.11": "4.1.11",
     "npm:@babel/core@^7.28.0": "7.28.4",
     "npm:@babel/preset-react@^7.27.1": "7.27.1_@babel+core@7.28.4",
     "npm:@mjackson/node-fetch-server@0.7": "0.7.0",
@@ -160,6 +161,9 @@
       "dependencies": [
         "jsr:@std/bytes"
       ]
+    },
+    "@zod/zod@4.1.11": {
+      "integrity": "0d48947455491addca672d8ef766d86bc7bc3add07e78d049b8ffd643bb33a7a"
     }
   },
   "npm": {
@@ -1363,6 +1367,7 @@
     "dependencies": [
       "jsr:@fresh/core@^2.1.1",
       "jsr:@fresh/plugin-vite@^1.0.4",
+      "jsr:@zod/zod@^4.1.11",
       "npm:@preact/signals@^2.3.1",
       "npm:@tailwindcss/vite@^4.1.12",
       "npm:preact@^10.27.2",

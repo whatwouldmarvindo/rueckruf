@@ -1,13 +1,14 @@
 import { define } from "../../utils.ts";
-import { RueckrufPayload } from "../../types/rueckruf.ts";
 import { processRueckruf } from "../../services/rueckrufService.ts";
+import { Rueckruf, rueckrufSchema } from "../../types/rueckruf-schema.ts";
 
-export const handler = define.handlers<RueckrufPayload>({
+export const handler = define.handlers<Rueckruf>({
   async POST(ctx) {
     try {
-      const body: RueckrufPayload = await ctx.req.json();
+      const body: unknown = await ctx.req.json();
+      const rueckrufData = rueckrufSchema.parse(body);
 
-      const filename = await processRueckruf(body);
+      const filename = await processRueckruf(rueckrufData);
 
       return new Response(
         JSON.stringify({
@@ -16,6 +17,7 @@ export const handler = define.handlers<RueckrufPayload>({
         }),
         { status: 200, headers: { "Content-Type": "application/json" } },
       );
+      // deno-lint-ignore no-explicit-any
     } catch (error: any) {
       // Handle any errors from parsing, validation, or file writing
       console.error("API Error in POST /api/rueckruf:", error.message);

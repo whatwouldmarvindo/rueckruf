@@ -1,5 +1,5 @@
-import { RueckrufPayload } from "../types/rueckruf.ts";
 import { saveToFile } from "../repositories/fileRepository.ts";
+import { Rueckruf } from "../types/rueckruf-schema.ts";
 
 /**
  * Processes a callback request by generating an HTML document
@@ -8,9 +8,8 @@ import { saveToFile } from "../repositories/fileRepository.ts";
  * @returns The filename where the data was saved.
  */
 export async function processRueckruf(
-  payload: RueckrufPayload,
+  payload: Rueckruf,
 ): Promise<string> {
-  // TODO: Validation
   const htmlContent = generateHtml(payload);
   const filename = await saveToFile(htmlContent, "rueckruf");
 
@@ -21,7 +20,7 @@ export async function processRueckruf(
  * Helper function to generate HTML from the payload.
  * Kept private to this service module.
  */
-function generateHtml(body: RueckrufPayload): string {
+function generateHtml(body: Rueckruf): string {
   return `
       <!DOCTYPE html>
       <html lang="de">
