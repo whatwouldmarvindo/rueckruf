@@ -4,7 +4,6 @@ import { DevkRadio } from "./DevkRadio.tsx";
 import { DevkInput } from "./DevkInput.tsx";
 import { DevkTextArea } from "./DevkTextArea.tsx";
 import { DevkInsureProductSelect } from "./DevkInsuranceProductSelect.tsx";
-import { preview } from "vite";
 
 interface RueckrufFormData {
   customerNumber?: number;
@@ -18,19 +17,27 @@ interface RueckrufFormData {
   contactTime?: string;
   interests: string[];
   comment?: string;
+  toC: boolean;
 }
 
 export default function RueckrufForm() {
   const [isCustomer, setIsCustomer] = useState(false);
   const [formData, setFormData] = useState<RueckrufFormData>({
     interests: [] as string[],
+    toC: false,
   });
-  const [acceptDatenschutz, setAcceptDatenschutz] = useState(false);
 
-  const handleSubmit = (e: h.JSX.TargetedEvent<HTMLElement, Event>) => {
+  const handleSubmit = async (
+    e: h.JSX.TargetedEvent<HTMLElement, SubmitEvent>,
+  ) => {
     e.preventDefault();
-    console.log(formData);
-    alert("Formulardaten wurden in der Konsole protokolliert.");
+    console.log(e);
+    const res = await fetch("/api/rueckruf", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    console.log(res);
   };
 
   return (
@@ -166,7 +173,11 @@ export default function RueckrufForm() {
                 name="ConfirmDatenschutz"
                 type="checkbox"
                 class="form-checkbox mr-2"
-                onChange={(e) => setAcceptDatenschutz(e.currentTarget.checked)}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    toC: e.currentTarget.checked,
+                  })}
               />
               Ich habe die Datenschutzhinweisen gelesen und akzeptiert
             </label>
