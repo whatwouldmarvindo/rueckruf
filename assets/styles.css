@@ -8,3 +8,8 @@
     rgb(254, 249, 195)
   );
 }
+
+@theme {
+  --color-brand-green: #008746;
+  --color-brand-green-dark: #005235;
+}

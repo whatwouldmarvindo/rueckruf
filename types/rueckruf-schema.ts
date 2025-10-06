@@ -8,7 +8,7 @@ export const rueckrufSchema = z.object({
   city: z.string().optional(),
   profession: z.string().optional(),
   employer: z.string().optional(),
-  email: z.string().email({
+  email: z.email({
     message: "Bitte geben Sie eine gültige E-Mail-Adresse an.",
   }).optional(),
 

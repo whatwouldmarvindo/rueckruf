@@ -31,19 +31,16 @@ export default function RueckrufForm() {
     e: h.JSX.TargetedEvent<HTMLElement, SubmitEvent>,
   ) => {
     e.preventDefault();
-    console.log(e);
-    const res = await fetch("/api/rueckruf", {
+    await fetch("/api/rueckruf", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
-    console.log(res);
   };
 
   return (
     <div class="bg-gray-100 min-h-screen flex items-center justify-center">
       <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
-        <p>{JSON.stringify(formData)}</p>
         <h2 class="text-2xl font-bold mb-6 text-gray-800">Kontaktanfrage</h2>
         <form onSubmit={handleSubmit}>
           <DevkRadio
@@ -63,6 +60,7 @@ export default function RueckrufForm() {
                   ...formData,
                   customerNumber: newValue as number,
                 })}
+              required
             />
           )}
 
@@ -75,6 +73,7 @@ export default function RueckrufForm() {
                   onChange={(newValue) =>
                     setFormData({ ...formData, firstName: newValue as string })}
                   placeholder="Max"
+                  required
                 />
 
                 <DevkInput
@@ -84,6 +83,7 @@ export default function RueckrufForm() {
                   onChange={(newValue) =>
                     setFormData({ ...formData, lastName: newValue as string })}
                   placeholder="Mustermann"
+                  required
                 />
               </div>
 
@@ -95,6 +95,7 @@ export default function RueckrufForm() {
                   onChange={(newValue: number) =>
                     setFormData({ ...formData, zipCode: newValue })}
                   placeholder="50667"
+                  required
                 />
 
                 <DevkInput
@@ -104,6 +105,7 @@ export default function RueckrufForm() {
                   onChange={(newValue: string) =>
                     setFormData({ ...formData, city: newValue })}
                   placeholder="Köln"
+                  required
                 />
               </div>
 
@@ -118,6 +120,7 @@ export default function RueckrufForm() {
                       profession: newValue,
                     })}
                   placeholder="Ihr Beruf"
+                  required
                 />
 
                 <DevkInput
@@ -137,6 +140,7 @@ export default function RueckrufForm() {
                 onChange={(newValue: string) =>
                   setFormData({ ...formData, email: newValue })}
                 placeholder="ihre.email@beispiel.de"
+                required
               />
             </>
           )}
@@ -148,6 +152,7 @@ export default function RueckrufForm() {
             placeholder="z.B. Mittwoch Vormittags"
             onChange={(newValue: string) =>
               setFormData({ ...formData, contactTime: newValue })}
+            required
           />
 
           <DevkTextArea
@@ -162,6 +167,7 @@ export default function RueckrufForm() {
             label="An welchen Versicherungssparten sind Sie interessiert?"
             onChange={(products: string[]) =>
               setFormData({ ...formData, interests: products })}
+            required
           />
 
           <hr />
@@ -178,6 +184,7 @@ export default function RueckrufForm() {
                     ...formData,
                     toC: e.currentTarget.checked,
                   })}
+                required
               />
               Ich habe die Datenschutzhinweisen gelesen und akzeptiert
             </label>
@@ -185,7 +192,7 @@ export default function RueckrufForm() {
 
           <div class="flex items-center justify-between">
             <button
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              class="bg-brand-green hover:bg-brand-green-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Anfrage senden
