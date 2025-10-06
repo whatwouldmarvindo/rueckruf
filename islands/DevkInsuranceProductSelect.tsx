@@ -1,31 +1,30 @@
 import { h } from "preact";
-import { useState } from "preact/hooks";
 
 type DevkTextareaProps = {
   label: string;
   value: string[];
   onChange: (newValue: string[]) => void;
+  required: boolean;
 };
 
 const insuranceProducts = ["Haftpflicht", "Hausrat", "KFZ", "Unfall", "Leben"];
 
 export function DevkInsureProductSelect(
-  { label, onChange, value: i }: DevkTextareaProps,
+  { label, onChange, value: interests, required }: DevkTextareaProps,
 ) {
   const handleInterestChange = (
     e: h.JSX.TargetedEvent<HTMLInputElement, Event>,
   ) => {
-    const { checked, value: productName } = e.currentTarget;
+    const { checked, value: newInterest } = e.currentTarget;
 
     let newInterests: string[];
 
     if (checked) {
-      newInterests = [...i, productName];
+      newInterests = [...interests, newInterest];
     } else {
-      newInterests = i.filter((interest) => interest !== productName);
+      newInterests = interests.filter((interest) => interest !== newInterest);
     }
 
-    // Wir rufen die onChange-Funktion der übergeordneten Komponente mit dem neuen, aktualisierten Array auf.
     onChange(newInterests);
   };
 
@@ -43,6 +42,7 @@ export function DevkInsureProductSelect(
                 value={insuranceProduct}
                 onChange={handleInterestChange}
                 class="form-checkbox"
+                required={required && interests.length <= 0}
               />
               <span class="ml-2">{insuranceProduct}</span>
             </label>
