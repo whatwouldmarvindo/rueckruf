@@ -7,7 +7,7 @@ type DevkTextareaProps = {
   required: boolean;
 };
 
-const insuranceProducts = ["Haftpflicht", "Hausrat", "KFZ", "Unfall", "Leben"];
+const insuranceProducts = ["Haftpflichtversicherung", "Hausratversicherung", "KFZ-Versicherung", "Unfallversicherung", "Lebensversicherung"];
 
 export function DevkInsureProductSelect(
   { label, onChange, value: interests, required }: DevkTextareaProps,

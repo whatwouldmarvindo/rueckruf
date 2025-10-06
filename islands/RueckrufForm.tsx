@@ -52,7 +52,7 @@ export default function RueckrufForm() {
 
           {isCustomer && (
             <DevkInput
-              label="Wie ist ihre Kundennummer"
+              label="Wie ist ihre Kundennummer?"
               name="customerNumber"
               type="number"
               onChange={(newValue: number | string) =>
@@ -186,7 +186,7 @@ export default function RueckrufForm() {
                   })}
                 required
               />
-              Ich habe die Datenschutzhinweisen gelesen und akzeptiert
+              Ich habe die Datenschutzhinweise gelesen und akzeptiert.
             </label>
           </div>
 
