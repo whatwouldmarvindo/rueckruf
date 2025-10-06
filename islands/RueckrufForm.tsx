@@ -105,8 +105,8 @@ export default function RueckrufForm() {
                   label="PLZ"
                   name="zipCode"
                   type="number"
-                  onChange={(newValue: number) =>
-                    setFormData({ ...formData, zipCode: newValue })}
+                  onChange={(newValue) =>
+                    setFormData({ ...formData, zipCode: newValue as number })}
                   placeholder="50667"
                   required
                 />
@@ -115,8 +115,8 @@ export default function RueckrufForm() {
                   label="Wohnort"
                   name="city"
                   type="text"
-                  onChange={(newValue: string) =>
-                    setFormData({ ...formData, city: newValue })}
+                  onChange={(newValue) =>
+                    setFormData({ ...formData, city: newValue as string })}
                   placeholder="Köln"
                   required
                 />
@@ -127,10 +127,10 @@ export default function RueckrufForm() {
                   label="Beruf"
                   name="profession"
                   type="text"
-                  onChange={(newValue: string) =>
+                  onChange={(newValue) =>
                     setFormData({
                       ...formData,
-                      profession: newValue,
+                      profession: newValue as string,
                     })}
                   placeholder="Ihr Beruf"
                   required
@@ -140,8 +140,8 @@ export default function RueckrufForm() {
                   label="Arbeitgeber"
                   name="employer"
                   type="text"
-                  onChange={(newValue: string) =>
-                    setFormData({ ...formData, employer: newValue })}
+                  onChange={(newValue) =>
+                    setFormData({ ...formData, employer: newValue as string })}
                   placeholder="Ihr Arbeitgeber"
                 />
               </div>
@@ -150,8 +150,8 @@ export default function RueckrufForm() {
                 label="E-Mail-Adresse"
                 name="email"
                 type="email"
-                onChange={(newValue: string) =>
-                  setFormData({ ...formData, email: newValue })}
+                onChange={(newValue) =>
+                  setFormData({ ...formData, email: newValue as string })}
                 placeholder="ihre.email@beispiel.de"
                 required
               />
@@ -163,8 +163,8 @@ export default function RueckrufForm() {
             name="contactTime"
             type="text"
             placeholder="z.B. Mittwoch Vormittags"
-            onChange={(newValue: string) =>
-              setFormData({ ...formData, contactTime: newValue })}
+            onChange={(newValue) =>
+              setFormData({ ...formData, contactTime: newValue as string })}
             required
           />
 
