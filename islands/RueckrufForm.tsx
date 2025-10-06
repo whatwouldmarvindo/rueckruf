@@ -26,6 +26,7 @@ export default function RueckrufForm() {
     interests: [] as string[],
     toC: false,
   });
+  const [sentForm, setSentForm] = useState(true);
 
   const handleSubmit = async (
     e: h.JSX.TargetedEvent<HTMLElement, SubmitEvent>,
@@ -36,6 +37,12 @@ export default function RueckrufForm() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
+    setSentForm(true);
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setFormData({ interests: [], toC: false });
   };
 
   return (
@@ -71,7 +78,10 @@ export default function RueckrufForm() {
                   label="Vorname"
                   name="firstName"
                   onChange={(newValue) =>
-                    setFormData({ ...formData, firstName: newValue as string })}
+                    setFormData({
+                      ...formData,
+                      firstName: newValue as string,
+                    })}
                   placeholder="Max"
                   required
                 />
@@ -81,7 +91,10 @@ export default function RueckrufForm() {
                   name="lastName"
                   type="text"
                   onChange={(newValue) =>
-                    setFormData({ ...formData, lastName: newValue as string })}
+                    setFormData({
+                      ...formData,
+                      lastName: newValue as string,
+                    })}
                   placeholder="Mustermann"
                   required
                 />
@@ -199,6 +212,11 @@ export default function RueckrufForm() {
             </button>
           </div>
         </form>
+        {sentForm && (
+          <p class="text-brand-green">
+            Anfrage erfolgreich übermitteln! Wir melden uns bei ihnen
+          </p>
+        )}
       </div>
     </div>
   );
