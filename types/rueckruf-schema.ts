@@ -12,7 +12,6 @@ export const rueckrufSchema = z.object({
     message: "Bitte geben Sie eine gültige E-Mail-Adresse an.",
   }).optional(),
 
-  // These fields have consistent validation rules.
   contactTime: z.string(),
   interests: z.array(z.string()).nonempty({
     message: "Bitte wählen Sie mindestens ein Interesse aus.",
